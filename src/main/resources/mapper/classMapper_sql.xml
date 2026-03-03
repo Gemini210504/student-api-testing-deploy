@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.testing_first.demo.mapper.ClassesMapper">
+
+    <!-- ✅ Result Mapping -->
+    <resultMap id="ClassResultMap" type="com.testing_first.demo.model.Classes">
+        <id     property="id"         column="id"/>
+        <result property="className"  column="class_name"/>
+        <result property="createdAt"  column="created_at"/>
+    </resultMap>
+
+    <!-- ✅ Select All -->
+    <select id="findAll" resultMap="ClassResultMap">
+        SELECT id, class_name, created_at
+        FROM classes
+        ORDER BY class_name
+    </select>
+
+    <!-- ✅ Select By ID -->
+    <select id="findById" parameterType="java.util.UUID" resultMap="ClassResultMap">
+        SELECT id, class_name, created_at
+        FROM classes
+        WHERE id = #{id}
+    </select>
+
+    <!-- ✅ Insert -->
+    <insert id="insert" parameterType="com.testing_first.demo.model.Classes">
+        INSERT INTO classes (class_name)
+        VALUES (#{className})
+    </insert>
+
+    <!-- ✅ Update -->
+    <update id="update" parameterType="com.testing_first.demo.model.Classes">
+        UPDATE classes
+        SET class_name = #{className}
+        WHERE id = #{id}
+    </update>
+
+    <!-- ✅ Delete -->
+    <delete id="deleteById" parameterType="java.util.UUID">
+        DELETE FROM classes
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
